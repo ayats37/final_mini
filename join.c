@@ -40,10 +40,10 @@ void	join_tokens(t_token **tokens)
 	tmp = *tokens;
 	while (tmp)
 	{
-		if (tmp->has_space == 0 && tmp->next
-			&& ((tmp->type == 3 || tmp->type == 4 || tmp->type == 1)
-				&& (tmp->next->type == 3
-					|| tmp->next->type == 4 || tmp->next->type == 1)))
+		if (tmp->has_space == 0 && tmp->next && ((tmp->type == 3
+					|| tmp->type == 4 || tmp->type == 1)
+				&& (tmp->next->type == 3 || tmp->next->type == 4
+					|| tmp->next->type == 1)))
 		{
 			perform_token_join(tmp);
 		}

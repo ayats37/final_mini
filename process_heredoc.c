@@ -12,8 +12,8 @@
 
 #include "minishell.h"
 
-static void	execute_heredoc_child(t_token *redir, int write_fd,
-	t_env *env_list, int last_exit_status)
+static void	execute_heredoc_child(t_token *redir, int write_fd, t_env *env_list,
+		int last_exit_status)
 {
 	t_heredoc_data	data;
 

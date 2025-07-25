@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:49:54 by taya              #+#    #+#             */
-/*   Updated: 2025/07/24 22:57:34 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 15:19:44 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	execute_builtin(t_token *node, t_env **envlist)
 	{
 		redir_result = handle_redirection(node);
 		if (redir_result != 0)
-			return (dup2(stdout_backup, STDOUT_FILENO),
-				dup2(stdin_backup, STDIN_FILENO),
-				close(stdout_backup), close(stdin_backup), redir_result);
+			return (dup2(stdout_backup, STDOUT_FILENO)
+				, dup2(stdin_backup, STDIN_FILENO), close(stdout_backup)
+				, close(stdin_backup), redir_result);
 	}
 	result = dispatch_builtin(node->cmds, envlist);
 	if (node && node->redir)

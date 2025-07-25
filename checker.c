@@ -33,8 +33,8 @@ int	check_errors(t_token *token)
 				|| tmp->type == 8) && tmp->next && (tmp->next->type == 2
 				|| tmp->next->type == 5 || tmp->next->type == 6
 				|| tmp->next->type == 7 || tmp->next->type == 8))
-			return (printf("bash: syntax error near unexpected token `%s'\n"
-					, tmp->next->value), 1);
+			return (printf("bash: syntax error near unexpected token `%s'\n",
+					tmp->next->value), 1);
 		tmp = tmp->next;
 	}
 	return (0);

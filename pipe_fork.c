@@ -44,10 +44,10 @@ int	fork_pipe_cmds(t_token *token, t_env **env_list, t_pipe_data *data)
 		{
 			data->pids[cmd_index] = fork();
 			if (data->pids[cmd_index] == -1)
-				return (cleanup_fork_fail(data, cmd_index)
-					, write_error_no_exit(NULL
-						, "fork: Resource temporarily unavailable")
-					, *(data->last_exit_status) = 1, 1);
+				return (cleanup_fork_fail(data, cmd_index),
+					write_error_no_exit(NULL,
+						"fork: Resource temporarily unavailable"),
+					*(data->last_exit_status) = 1, 1);
 			if (data->pids[cmd_index] == 0)
 			{
 				child_pipes(data, cmd_index);

@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 12:44:29 by taya              #+#    #+#             */
-/*   Updated: 2025/07/25 12:44:57 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 15:17:21 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*ft_strndup(const char *s1, size_t n)
 	s2[i] = '\0';
 	return (s2);
 }
+
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
 	void	*new_ptr;

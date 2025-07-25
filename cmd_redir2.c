@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 12:04:06 by taya              #+#    #+#             */
-/*   Updated: 2025/07/25 14:12:42 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 15:15:55 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,21 @@ t_token	*create_final_cmd_token(t_cmd_data *data)
 		i++;
 	}
 	cmds_copy[i] = NULL;
-
 	if (cmds_copy[0] != NULL)
 		cmd_token = create_token(cmds_copy[0], 0, 0);
 	else
 		cmd_token = create_token("", 0, 0);
-
 	cmd_token->type = CMD;
 	cmd_token->cmds = cmds_copy;
 	cmd_token->redir = data->redir_head;
 	return (cmd_token);
 }
 
-
 void	free_cmd_data(t_cmd_data *data)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (i < data->cmd_count)
 		free(data->cmds[i++]);
 	free(data->cmds);
@@ -55,7 +53,7 @@ void	free_cmd_data(t_cmd_data *data)
 t_token	*process_non_pipe_tokens(t_token **tmp)
 {
 	t_cmd_data	data;
-	t_token *result;
+	t_token		*result;
 
 	init_cmd_data(&data);
 	if (!data.cmds)

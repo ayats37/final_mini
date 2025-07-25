@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:54:20 by taya              #+#    #+#             */
-/*   Updated: 2025/07/17 18:13:12 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 15:14:40 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_lexer(t_lexer *lexer)
 
 void	free_token(t_token *token)
 {
-	int i;
+	int	i;
 
 	if (!token)
 		return ;

@@ -37,8 +37,8 @@ int	parse_export_arg(char *arg, char **name, char **value, int *append)
 	*append = 0;
 	equal_sign = ft_strchr(arg, '=');
 	if (equal_sign == arg)
-		return (printf("minishell: export: `%s': not a valid identifier\n", arg)
-			, 1);
+		return (printf("minishell: export: `%s': not a valid identifier\n",
+				arg), 1);
 	if (equal_sign > arg + 1 && *(equal_sign - 1) == '+')
 	{
 		*append = 1;
@@ -50,8 +50,8 @@ int	parse_export_arg(char *arg, char **name, char **value, int *append)
 	{
 		if (*name)
 			free(*name);
-		return (printf("minishell: export: `%s': not a valid identifier\n", arg)
-			, 1);
+		return (printf("minishell: export: `%s': not a valid identifier\n",
+				arg), 1);
 	}
 	*value = ft_strdup(equal_sign + 1);
 	return (0);

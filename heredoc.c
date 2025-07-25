@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	g_heredoc_interrupted = 0;
+int		g_heredoc_interrupted = 0;
 
 void	heredoc_sigint_handler(int sig)
 {
