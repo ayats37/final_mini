@@ -34,6 +34,8 @@ void	free_token(t_token *token)
 	}
 	if (token->value)
 		free(token->value);
+	if (token->redir)
+		free_token_list(token->redir);
 	free(token);
 }
 
