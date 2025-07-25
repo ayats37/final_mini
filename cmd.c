@@ -6,13 +6,13 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:50:21 by taya              #+#    #+#             */
-/*   Updated: 2025/07/25 11:07:53 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 12:03:09 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_directory(char *path)
+int	is_directory(char *path)
 {
 	struct stat	st;
 
@@ -21,7 +21,7 @@ static int	is_directory(char *path)
 	return (S_ISDIR(st.st_mode));
 }
 
-static char	*get_validated_path(char *cmd, t_env **envlist)
+char	*get_validated_path(char *cmd, t_env **envlist)
 {
 	char	*full_path;
 
@@ -40,7 +40,7 @@ static char	*get_validated_path(char *cmd, t_env **envlist)
 	return (full_path);
 }
 
-static void	execute_child_process(char **cmds, t_env *envlist, t_token *node)
+void	execute_child_process(char **cmds, t_env *envlist, t_token *node)
 {
 	char	*full_path;
 	char	**env_array;
@@ -66,7 +66,7 @@ static void	execute_child_process(char **cmds, t_env *envlist, t_token *node)
 	exit(127);
 }
 
-static void	handle_parent_wait(pid_t pid, int *last_exit_status)
+void	handle_parent_wait(pid_t pid, int *last_exit_status)
 {
 	int	status;
 
@@ -79,7 +79,7 @@ static void	handle_parent_wait(pid_t pid, int *last_exit_status)
 		*last_exit_status = 1;
 }
 
-static int	handle_empty_cmd_with_redir(t_token *node, int *last_exit_status)
+int	handle_empty_cmd_with_redir(t_token *node, int *last_exit_status)
 {
 	pid_t	pid;
 
@@ -97,39 +97,4 @@ static int	handle_empty_cmd_with_redir(t_token *node, int *last_exit_status)
 	}
 	handle_parent_wait(pid, last_exit_status);
 	return (0);
-}
-
-static int	execute_with_fork(char **cmds, t_env *envlist, t_token *node,
-		int *last_exit_status)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		write_error_no_exit(cmds[0], "fork failed");
-		*last_exit_status = 1;
-		return (1);
-	}
-	if (pid == 0)
-		execute_child_process(cmds, envlist, node);
-	handle_parent_wait(pid, last_exit_status);
-	return (*last_exit_status);
-}
-
-int	execute_cmd(char **cmds, t_env *envlist, t_token *node,
-		int *last_exit_status)
-{
-	if (!cmds[0] && !node->redir)
-	{
-		printf("minishell: : command not found\n");
-		return (1);
-	}
-	if (!cmds || !cmds[0])
-	{
-		if (node && node->redir)
-			return (handle_empty_cmd_with_redir(node, last_exit_status));
-		return (0);
-	}
-	return (execute_with_fork(cmds, envlist, node, last_exit_status));
 }

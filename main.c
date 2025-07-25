@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:45:13 by ouel-afi          #+#    #+#             */
-/*   Updated: 2025/07/24 23:48:46 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 12:06:01 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,48 +31,6 @@ void	setup_shell_terminal(void)
 		exit(1);
 	}
 }
-
-// void	print_linked_list(t_token *token_list)
-// {
-// 	t_token	*current;
-// 	t_token	*redir_tmp;
-// 	int		i;
-
-// 	current = token_list;
-// 	while (current)
-// 	{
-// 		printf("token->value =%s	token->type =%d			token->has_space =
-// 										%d		token->expand_heredoc = %d\n",
-// 				current->value,
-// 				current->type,
-// 				current->has_space,
-// 				current->expand_heredoc);
-// 		if (current->cmds)
-// 		{
-// 			printf("  cmds: ");
-// 			i = 0;
-// 			while (current->cmds[i])
-// 			{
-// 				printf("[%s] ", current->cmds[i]);
-// 				i++;
-// 			}
-// 			printf("\n");
-// 		}
-// 		if (current->redir)
-// 		{
-// 			printf("  redir: ");
-// 			redir_tmp = current->redir;
-// 			while (redir_tmp)
-// 			{
-// 				printf("[type:%d value:%s] ", redir_tmp->type,
-// 						redir_tmp->value);
-// 				redir_tmp = redir_tmp->next;
-// 			}
-// 			printf("\n");
-// 		}
-// 		current = current->next;
-// 	}
-// }
 
 void	handler(int sig)
 {
