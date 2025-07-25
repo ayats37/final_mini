@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 23:31:32 by taya              #+#    #+#             */
-/*   Updated: 2025/07/25 12:29:52 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 12:36:37 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 # include "./libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
-# include <sys/stat.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 
 extern int			g_heredoc_interrupted;
 
@@ -80,22 +80,21 @@ typedef struct s_pipe_data
 
 typedef struct s_cmd_data
 {
-	char	**cmds;
-	int		cmd_count;
-	int		cmd_capacity;
-	t_token	*redir_head;
-	t_token	*redir_tail;
-}	t_cmd_data;
+	char			**cmds;
+	int				cmd_count;
+	int				cmd_capacity;
+	t_token			*redir_head;
+	t_token			*redir_tail;
+}					t_cmd_data;
 
 typedef struct s_heredoc_data
 {
-	char	*delimiter;
-	int		write_fd;
-	int		expand;
-	t_env	*envlist;
-	int		last_exit_status;
-}	t_heredoc_data;
-
+	char			*delimiter;
+	int				write_fd;
+	int				expand;
+	t_env			*envlist;
+	int				last_exit_status;
+}					t_heredoc_data;
 
 t_lexer				*initialize_lexer(char *input);
 t_token				*get_next_token(t_lexer *lexer);
@@ -132,11 +131,13 @@ int					execute_cmd(char **cmds, t_env *envlist, t_token *node,
 void				write_error_no_exit(char *command, char *message);
 int					has_pipeline(t_token *token);
 int					count_commands(t_token *token);
-void	execute_child_process(char **cmds, t_env *envlist, t_token *node);
-int	execute_with_fork(char **cmds, t_env *envlist, t_token *node,
-		int *last_exit_status);
-int	handle_empty_cmd_with_redir(t_token *node, int *last_exit_status);
-void	handle_parent_wait(pid_t pid, int *last_exit_status);
+void				execute_child_process(char **cmds, t_env *envlist,
+						t_token *node);
+int					execute_with_fork(char **cmds, t_env *envlist,
+						t_token *node, int *last_exit_status);
+int					handle_empty_cmd_with_redir(t_token *node,
+						int *last_exit_status);
+void				handle_parent_wait(pid_t pid, int *last_exit_status);
 int					execute_single_command(t_token *token, t_env **env_list,
 						int *last_exit_status);
 int					create_pipes(t_pipe_data *data);
@@ -168,7 +169,7 @@ void				free_pipes(int **pipes, int count);
 void				free_pipeline_data(t_pipe_data *data);
 
 void				heredoc_sigint_handler(int sig);
-void	handle_heredoc_input(t_heredoc_data *data);
+void				handle_heredoc_input(t_heredoc_data *data);
 void				close_heredoc_fds(t_token *token);
 int					process_heredoc(t_token *token, t_env *env_list,
 						int last_exit_status);
@@ -207,8 +208,8 @@ int					ft_cd(char **cmd, t_env *envlist);
 void				handler(int sig);
 void				reset_terminal_mode(void);
 void				cleanup_fork_fail(t_pipe_data *data, int forked_count);
-void	execute_child_in_pipe(t_token *tmp, t_env **env_list,
-		int *last_exit_status);
+void				execute_child_in_pipe(t_token *tmp, t_env **env_list,
+						int *last_exit_status);
 void				expand_variables(t_token **token_list, t_env *env_list,
 						int last_exit_status);
 void				to_expand(t_token *tmp, t_env *env_list,
@@ -225,12 +226,11 @@ void				expand_heredoc(char **line, t_env *env_list,
 						int last_exit_status);
 int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strndup(const char *s1, size_t n);
-void	init_cmd_data(t_cmd_data *data);
-int	expand_cmd_array(t_cmd_data *data);
-void	process_cmd_token(t_token *tmp, t_cmd_data *data);
-void	process_redir_token(t_token **tmp, t_cmd_data *data);
-t_token	*create_final_cmd_token(t_cmd_data *data);
-t_token	*process_non_pipe_tokens(t_token **tmp);
-
+void				init_cmd_data(t_cmd_data *data);
+int					expand_cmd_array(t_cmd_data *data);
+void				process_cmd_token(t_token *tmp, t_cmd_data *data);
+void				process_redir_token(t_token **tmp, t_cmd_data *data);
+t_token				*create_final_cmd_token(t_cmd_data *data);
+t_token				*process_non_pipe_tokens(t_token **tmp);
 
 #endif
