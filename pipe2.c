@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 18:14:09 by taya              #+#    #+#             */
-/*   Updated: 2025/07/25 12:19:45 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 16:00:51 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,44 @@ void	close_all_pipes(t_pipe_data *data)
 	}
 }
 
-int	create_pipes(t_pipe_data *data)
-{
-	int	i;
+// int	create_pipes(t_pipe_data *data)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < data->cmd_count - 1)
-	{
-		if (pipe(data->pipes[i]) == -1)
-		{
-			write_error_no_exit(NULL, "pipe failed");
-			*(data->last_exit_status) = 1;
-			return (1);
-		}
-		i++;
-	}
-	return (0);
+// 	i = 0;
+// 	while (i < data->cmd_count - 1)
+// 	{
+// 		if (pipe(data->pipes[i]) == -1)
+// 		{
+// 			write_error_no_exit(NULL, "pipe faoooooooiled");
+// 			*(data->last_exit_status) = 1;
+// 			return (1);
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
+int create_pipes(t_pipe_data *data)
+{
+    int i;
+
+    i = 0;
+    while (i < data->cmd_count - 1)
+    {
+        if (pipe(data->pipes[i]) == -1)
+        {
+					write_error_no_exit(NULL, "fork: Resource temporarily unavailable");
+            *(data->last_exit_status) = 1;
+            while (--i >= 0)
+            {
+                close(data->pipes[i][0]);
+                close(data->pipes[i][1]);
+            }
+            return (1);
+        }
+        i++;
+    }
+    return (0);
 }
 
 int	execute_single_command(t_token *token, t_env **env_list,

@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 23:31:32 by taya              #+#    #+#             */
-/*   Updated: 2025/07/25 15:25:48 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 15:46:01 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,5 +226,5 @@ t_token				*create_final_cmd_token(t_cmd_data *data);
 t_token				*process_non_pipe_tokens(t_token **tmp);
 void				*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 void				free_cmd_data(t_cmd_data *data);
-
+void				cleanup_fork_fail(t_pipe_data *data, int forked_count);
 #endif
