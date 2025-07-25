@@ -3,98 +3,135 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouel-afi <ouel-afi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 19:27:43 by ouel-afi          #+#    #+#             */
-/*   Updated: 2025/07/24 19:28:04 by ouel-afi         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:29:38 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token *get_cmd_and_redir(t_token *token_list)
+static void	init_cmd_data(t_cmd_data *data)
 {
-	int expand_h_doc = 0;
-    t_token *final_token = NULL;
-    t_token *tmp = token_list;
-    t_token *pipe;
-	// print_linked_list(token_list);
+	data->cmd_count = 0;
+	data->cmd_capacity = 8;
+	data->redir_head = NULL;
+	data->redir_tail = NULL;
+	data->cmds = malloc(sizeof(char *) * data->cmd_capacity);
+}
 
-    while (tmp)
-    {
-        if (tmp->type != PIPE)
-        {
-            t_token *cmd_token = NULL;
-            char **cmds = NULL;
-            t_token *redir_head = NULL;
-            t_token *redir_tail = NULL;
-            int cmd_count = 0;
-            int cmd_capacity = 8;
+static int	expand_cmd_array(t_cmd_data *data)
+{
+	char	**new_cmds;
 
-            cmds = malloc(sizeof(char *) * cmd_capacity);
-            if (!cmds)
-                return NULL;
+	if (data->cmd_count >= data->cmd_capacity)
+	{
+		data->cmd_capacity *= 2;
+		new_cmds = realloc(data->cmds, sizeof(char *) * data->cmd_capacity);
+		if (!new_cmds)
+		{
+			free(data->cmds);
+			return (0);
+		}
+		data->cmds = new_cmds;
+	}
+	return (1);
+}
 
-            while (tmp && tmp->type != PIPE)
-            {
-                if (tmp->type == CMD || tmp->type == SINGLE_QUOTE || tmp->type == DOUBLE_QUOTE)
-                {
-                    if (cmd_count >= cmd_capacity)
-                    {
-                        cmd_capacity *= 2;
-                        char **new_cmds = realloc(cmds, sizeof(char *) * cmd_capacity);
-                        if (!new_cmds)
-                        {
-                            free(cmds);
-                            return NULL;
-                        }
-                        cmds = new_cmds;
-                    }
-                    cmds[cmd_count++] = strdup(tmp->value);
-                    tmp = tmp->next;
-                }
-                else if (tmp->type == REDIR_IN || tmp->type == REDIR_OUT || tmp->type == APPEND || tmp->type == HEREDOC)
-                {
-					expand_h_doc = tmp->next->expand_heredoc;
-                    t_token *redir_op = tmp;
-                    t_token *redir_target = tmp->next;
-                    if (!redir_target)
-                        break;
-                    t_token *redir_token = create_token(redir_target->value, 0, redir_target->has_space);
-					redir_token->expand_heredoc = expand_h_doc;
-                    redir_token->type = redir_op->type;
-                    if (!redir_head)
-                        redir_head = redir_token;
-                    else
-                        redir_tail->next = redir_token;
-                    redir_tail = redir_token;
-                    tmp = redir_target->next;
-                }
-                else
-                    tmp = tmp->next;
-            }
-            cmds[cmd_count] = NULL;
-            if (cmds && cmds[0])
-            {
-                cmd_token = create_token(cmds[0], 0, 0);
-                cmd_token->type = CMD;
-            }
-            else
-            {
-                cmd_token = create_token("", 0, 0);
-                cmd_token->type = CMD;
-            }
-            cmd_token->cmds = cmds;
-            cmd_token->redir = redir_head;
-            append_token(&final_token, cmd_token);
-        }
-        else if (tmp && tmp->type == PIPE)
-        {
-            pipe = create_token(tmp->value, 0, tmp->has_space);
-            pipe->type = PIPE;
-            append_token(&final_token, pipe);
-            tmp = tmp->next;
-        }
-    }
-    return final_token;
+static void	process_cmd_token(t_token *tmp, t_cmd_data *data)
+{
+	if (!expand_cmd_array(data))
+		return ;
+	data->cmds[data->cmd_count++] = strdup(tmp->value);
+}
+
+static void	process_redir_token(t_token **tmp, t_cmd_data *data)
+{
+	t_token	*redir_op;
+	t_token	*redir_target;
+	t_token	*redir_token;
+	int		expand_h_doc;
+
+	redir_op = *tmp;
+	redir_target = (*tmp)->next;
+	if (!redir_target)
+		return ;
+	expand_h_doc = redir_target->expand_heredoc;
+	redir_token = create_token(redir_target->value, 0, redir_target->has_space);
+	redir_token->expand_heredoc = expand_h_doc;
+	redir_token->type = redir_op->type;
+	if (!data->redir_head)
+		data->redir_head = redir_token;
+	else
+		data->redir_tail->next = redir_token;
+	data->redir_tail = redir_token;
+	*tmp = redir_target->next;
+}
+
+static t_token	*create_final_cmd_token(t_cmd_data *data)
+{
+	t_token	*cmd_token;
+
+	data->cmds[data->cmd_count] = NULL;
+	if (data->cmds && data->cmds[0])
+		cmd_token = create_token(data->cmds[0], 0, 0);
+	else
+		cmd_token = create_token("", 0, 0);
+	cmd_token->type = CMD;
+	cmd_token->cmds = data->cmds;
+	cmd_token->redir = data->redir_head;
+	return (cmd_token);
+}
+
+static t_token	*process_non_pipe_tokens(t_token **tmp)
+{
+	t_cmd_data	data;
+
+	init_cmd_data(&data);
+	if (!data.cmds)
+		return (NULL);
+	while (*tmp && (*tmp)->type != PIPE)
+	{
+		if ((*tmp)->type == CMD || (*tmp)->type == SINGLE_QUOTE
+			|| (*tmp)->type == DOUBLE_QUOTE)
+		{
+			process_cmd_token(*tmp, &data);
+			*tmp = (*tmp)->next;
+		}
+		else if ((*tmp)->type == REDIR_IN || (*tmp)->type == REDIR_OUT
+			|| (*tmp)->type == APPEND || (*tmp)->type == HEREDOC)
+			process_redir_token(tmp, &data);
+		else
+			*tmp = (*tmp)->next;
+	}
+	return (create_final_cmd_token(&data));
+}
+
+t_token	*get_cmd_and_redir(t_token *token_list)
+{
+	t_token	*final_token;
+	t_token	*tmp;
+	t_token	*pipe;
+	t_token	*cmd_token;
+
+	final_token = NULL;
+	tmp = token_list;
+	while (tmp)
+	{
+		if (tmp->type != PIPE)
+		{
+			cmd_token = process_non_pipe_tokens(&tmp);
+			if (cmd_token)
+				append_token(&final_token, cmd_token);
+		}
+		else if (tmp && tmp->type == PIPE)
+		{
+			pipe = create_token(tmp->value, 0, tmp->has_space);
+			pipe->type = PIPE;
+			append_token(&final_token, pipe);
+			tmp = tmp->next;
+		}
+	}
+	return (final_token);
 }

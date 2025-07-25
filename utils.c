@@ -59,4 +59,3 @@ char	*char_to_str(char c)
 	str[1] = '\0';
 	return (str);
 }
-

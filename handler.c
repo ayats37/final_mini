@@ -20,11 +20,12 @@ void	skip_whitespace(t_lexer *lexer)
 
 t_token	*handle_quote(t_lexer *lexer, char quote)
 {
-	t_token *token = NULL;
+	t_token	*token;
 	size_t	length;
 	size_t	start;
 	char	*value;
 
+	token = NULL;
 	lexer->position += 1;
 	start = lexer->position;
 	while (lexer->position < lexer->length

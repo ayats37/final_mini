@@ -16,7 +16,7 @@ void	wait_for_children(t_pipe_data *data)
 {
 	int	i;
 	int	status;
-		int temp_status;
+	int	temp_status;
 
 	i = 0;
 	status = 0;

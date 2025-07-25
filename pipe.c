@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:51:18 by taya              #+#    #+#             */
-/*   Updated: 2025/07/24 18:51:31 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 02:32:40 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,16 @@ int	fork_pipe_cmds(t_token *token, t_env **env_list, t_pipe_data *data)
 
 	tmp = token;
 	cmd_index = 0;
-
 	while (tmp && cmd_index < data->cmd_count)
 	{
 		if (tmp->type == 1 || tmp->type == 3 || tmp->type == 4)
 		{
 			data->pids[cmd_index] = fork();
 			if (data->pids[cmd_index] == -1)
-			{
-				cleanup_fork_fail(data, cmd_index);
-				return (write_error_no_exit(NULL, "fork: Resource temporarily unavailable"),
-					*(data->last_exit_status) = 1, 1);
-			}
+				return (cleanup_fork_fail(data, cmd_index)
+					, write_error_no_exit(NULL
+						, "fork: Resource temporarily unavailable")
+					, *(data->last_exit_status) = 1, 1);
 			if (data->pids[cmd_index] == 0)
 			{
 				child_pipes(data, cmd_index);

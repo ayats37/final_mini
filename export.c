@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouel-afi <ouel-afi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:50:56 by taya              #+#    #+#             */
-/*   Updated: 2025/07/24 17:53:29 by ouel-afi         ###   ########.fr       */
+/*   Updated: 2025/07/24 23:04:41 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	parse_export_arg(char *arg, char **name, char **value, int *append)
 	*append = 0;
 	equal_sign = ft_strchr(arg, '=');
 	if (equal_sign == arg)
-		return (printf("minishell: export: `%s': not a valid identifier\n",
-				arg), 1);
+		return (printf("minishell: export: `%s': not a valid identifier\n", arg)
+			, 1);
 	if (equal_sign > arg + 1 && *(equal_sign - 1) == '+')
 	{
 		*append = 1;
@@ -50,8 +50,8 @@ int	parse_export_arg(char *arg, char **name, char **value, int *append)
 	{
 		if (*name)
 			free(*name);
-		return (printf("minishell: export: `%s': not a valid identifier\n",
-				arg), 1);
+		return (printf("minishell: export: `%s': not a valid identifier\n", arg)
+			, 1);
 	}
 	*value = ft_strdup(equal_sign + 1);
 	return (0);
@@ -76,15 +76,16 @@ int	process_export(char *arg, t_env **env_list)
 
 void	print_export(t_env **env_list)
 {
-	t_env *tmp = *env_list;
+	t_env	*tmp;
 
+	tmp = *env_list;
 	while (tmp)
 	{
 		printf("declare -x ");
 		printf("%s=", tmp->name);
 		printf("%s", tmp->value);
 		printf("\n");
-		tmp= tmp->next;
+		tmp = tmp->next;
 	}
 }
 

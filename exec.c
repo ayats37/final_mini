@@ -36,11 +36,13 @@ int	execute_cmds(t_token *token, t_env **env_list, int *last_exit_status)
 	{
 		if (token->type == 1 || token->type == 3 || token->type == 4)
 		{
-			if (is_builtin(token->cmds[0])){	
+			if (is_builtin(token->cmds[0]))
+			{
 				status = execute_builtin(token, env_list);
 			}
-			else{
-					status = execute_cmd(token->cmds, *env_list, token,
+			else
+			{
+				status = execute_cmd(token->cmds, *env_list, token,
 						last_exit_status);
 			}
 			*last_exit_status = status;

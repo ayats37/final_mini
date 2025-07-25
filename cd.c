@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:50:07 by taya              #+#    #+#             */
-/*   Updated: 2025/07/24 19:33:29 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/24 23:05:10 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int	ft_cd(char **cmd, t_env *envlist)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		return (printf("minishell: cd: error retrieving current directory\n"),
-			1);
+		return (printf("minishell: cd: error retrieving current directory\n")
+			, 1);
 	oldpwd = ft_strdup(cwd);
 	free(cwd);
 	path = get_cd_path(cmd, oldpwd, envlist);

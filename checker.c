@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouel-afi <ouel-afi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 19:26:43 by ouel-afi          #+#    #+#             */
-/*   Updated: 2025/07/24 19:26:50 by ouel-afi         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:14:20 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ int	check_errors(t_token *token)
 	if (!token)
 		return (1);
 	if (token->type == 2)
-	{
-		printf("bash: syntax error near unexpected token `|'\n");
-		return (1);
-	}
+		return (printf("bash: syntax error near unexpected token `|'\n"), 1);
 	tmp = token;
 	while (tmp)
 	{
@@ -36,11 +33,8 @@ int	check_errors(t_token *token)
 				|| tmp->type == 8) && tmp->next && (tmp->next->type == 2
 				|| tmp->next->type == 5 || tmp->next->type == 6
 				|| tmp->next->type == 7 || tmp->next->type == 8))
-		{
-			printf("bash: syntax error near unexpected token `%s'\n",
-					tmp->next->value);
-			return (1);
-		}
+			return (printf("bash: syntax error near unexpected token `%s'\n"
+					, tmp->next->value), 1);
 		tmp = tmp->next;
 	}
 	return (0);

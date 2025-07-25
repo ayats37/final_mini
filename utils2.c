@@ -71,11 +71,12 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 char	*ft_strndup(const char *s1, size_t n)
 {
-	size_t	len = 0;
+	size_t	len;
 	size_t	size;
 	size_t	i;
 	char	*s2;
 
+	len = 0;
 	while (s1[len])
 		len++;
 	if (len < n)
