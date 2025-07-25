@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 19:27:43 by ouel-afi          #+#    #+#             */
-/*   Updated: 2025/07/25 12:48:08 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 15:29:28 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	expand_cmd_array(t_cmd_data *data)
 	if (data->cmd_count >= data->cmd_capacity)
 	{
 		data->cmd_capacity *= 2;
-		new_cmds = realloc(data->cmds, sizeof(char *) * data->cmd_capacity);
+	 	new_cmds = ft_realloc(data->cmds, sizeof(char *) * (data->cmd_capacity / 2), sizeof(char *) * data->cmd_capacity);
 		if (!new_cmds)
 		{
 			free(data->cmds);
