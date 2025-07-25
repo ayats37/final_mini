@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 23:31:32 by taya              #+#    #+#             */
-/*   Updated: 2025/07/25 12:24:57 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 12:29:52 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <termios.h>

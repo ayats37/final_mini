@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 19:19:17 by ouel-afi          #+#    #+#             */
-/*   Updated: 2025/07/24 22:51:52 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 12:28:31 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,15 @@ t_type	token_type(t_token *token)
 		return (SINGLE_QUOTE);
 	else if (token->type == 4)
 		return (DOUBLE_QUOTE);
-	else if (strcmp(token->value, "|") == 0)
+	else if (ft_strcmp(token->value, "|") == 0)
 		return (PIPE);
-	else if (strcmp(token->value, ">>") == 0)
+	else if (ft_strcmp(token->value, ">>") == 0)
 		return (APPEND);
-	else if (strcmp(token->value, "<<") == 0)
+	else if (ft_strcmp(token->value, "<<") == 0)
 		return (HEREDOC);
-	else if (strcmp(token->value, "<") == 0)
+	else if (ft_strcmp(token->value, "<") == 0)
 		return (REDIR_IN);
-	else if (strcmp(token->value, ">") == 0)
+	else if (ft_strcmp(token->value, ">") == 0)
 		return (REDIR_OUT);
 	else
 		return (CMD);

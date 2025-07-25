@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 19:27:43 by ouel-afi          #+#    #+#             */
-/*   Updated: 2025/07/25 12:24:14 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 12:29:01 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	process_cmd_token(t_token *tmp, t_cmd_data *data)
 {
 	if (!expand_cmd_array(data))
 		return ;
-	data->cmds[data->cmd_count++] = strdup(tmp->value);
+	data->cmds[data->cmd_count++] = ft_strdup(tmp->value);
 }
 
 void	process_redir_token(t_token **tmp, t_cmd_data *data)
