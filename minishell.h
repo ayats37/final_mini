@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 23:31:32 by taya              #+#    #+#             */
-/*   Updated: 2025/07/25 15:20:07 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 15:25:48 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include "./libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -26,6 +24,8 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 extern int			g_heredoc_interrupted;
 
@@ -109,7 +109,6 @@ void				skip_whitespace(t_lexer *lexer);
 t_token				*handle_quote(t_lexer *lexer, char quote);
 t_token				*handle_word(t_lexer *lexer);
 int					check_errors(t_token *token);
-void				print_linked_list(t_token *token_list);
 int					is_builtin(char *cmd);
 int					dispatch_builtin(char **cmd, t_env **envlist);
 int					execute_builtin(t_token *node, t_env **envlist);
@@ -150,14 +149,12 @@ int					fork_pipe_cmds(t_token *token, t_env **env_list,
 						t_pipe_data *data);
 int					execute_pipeline(t_token *token, t_env **env_list,
 						int *last_exit_status);
-
 char				*str_join_free(char *s1, const char *s2);
 int					is_alphanumeric(int c);
 int					is_alpha(int c);
 int					is_digit(int c);
 int					is_num(const char *str);
 char				*char_to_str(char c);
-
 void				free_env_array(char **env_array);
 void				free_env_array_partial(char **env_array, int i);
 void				ft_free_arr(char **arr);
@@ -167,13 +164,11 @@ void				free_token_list(t_token *token_list);
 void				free_env_list(t_env *env);
 void				free_pipes(int **pipes, int count);
 void				free_pipeline_data(t_pipe_data *data);
-
 void				heredoc_sigint_handler(int sig);
 void				handle_heredoc_input(t_heredoc_data *data);
 void				close_heredoc_fds(t_token *token);
 int					process_heredoc(t_token *token, t_env *env_list,
 						int last_exit_status);
-
 void				update_env(char *name, char *value, t_env **env_list);
 char				*get_env_value(char *name, t_env *env_list);
 t_env				*find_env_var(char *name, t_env *env_list);
@@ -184,7 +179,6 @@ void				add_to_env_list(t_env **head, t_env *new_node);
 t_env				*init_env(char **envp);
 char				**env_list_to_array(t_env *env_list);
 char				*build_env_string(char *name, char *value);
-
 void				unset_var(t_env **env_list, char *name);
 int					ft_unset(char **cmd, t_env **env_list);
 void				update_pwd_vars(char *oldpwd, t_env *envlist);
@@ -204,10 +198,8 @@ char				*get_oldpwd_path(char **cmd, char *oldpwd, t_env *envlist);
 char				*get_envvar_path(char **cmd, char *oldpwd, t_env *envlist);
 char				*get_cd_path(char **cmd, char *oldpwd, t_env *envlist);
 int					ft_cd(char **cmd, t_env *envlist);
-
 void				handler(int sig);
 void				reset_terminal_mode(void);
-void				cleanup_fork_fail(t_pipe_data *data, int forked_count);
 void				execute_child_in_pipe(t_token *tmp, t_env **env_list,
 						int *last_exit_status);
 void				expand_variables(t_token **token_list, t_env *env_list,
