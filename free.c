@@ -21,8 +21,17 @@ void	free_lexer(t_lexer *lexer)
 
 void	free_token(t_token *token)
 {
+	int i;
+
 	if (!token)
 		return ;
+	if (token->cmds)
+	{
+		i = 0;
+		while (token->cmds[i])
+			free(token->cmds[i++]);
+		free(token->cmds);
+	}
 	if (token->value)
 		free(token->value);
 	free(token);

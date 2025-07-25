@@ -32,9 +32,47 @@
 
 
 
-SRCS =  main.c handler.c tokenizer.c handle_word.c process_heredoc.c checker.c cmd_redir.c cmd_redir2.c join.c expand.c builtin.c pipe2.c cd.c check_path.c cmd.c echo.c env_list.c env_list2.c env.c exec.c exit.c export.c free.c free2.c heredoc.c pipe.c pwd.c redir.c unset.c utils.c utils2.c expand_heredoc.c expand2.c split_expand.c execute_cmd.c pipe_fork.c  utils3.c
+# SRCS =  main.c handler.c tokenizer.c handle_word.c process_heredoc.c checker.c cmd_redir.c cmd_redir2.c join.c expand.c builtin.c pipe2.c cd.c check_path.c cmd.c echo.c env_list.c env_list2.c env.c exec.c exit.c export.c free.c free2.c heredoc.c pipe.c pwd.c redir.c unset.c utils.c utils2.c expand_heredoc.c expand2.c split_expand.c execute_cmd.c pipe_fork.c  utils3.c
+# CC = cc
+# CFLAGS = -Wall -Wextra -Werror
+# NAME = minishell
+
+# OBJS = $(SRCS:.c=.o)
+
+# LIBFT_DIR = ./libft
+# LIBFT = $(LIBFT_DIR)/libft.a
+
+# all: $(NAME)
+
+# $(NAME): $(OBJS) $(LIBFT)
+# 	$(CC) $(CFLAGS) -L/Users/taya/goinfre/homebrew/opt/readline/lib -lreadline $(OBJS) $(LIBFT) -o $(NAME)
+
+# $(LIBFT):
+# 	$(MAKE) -C $(LIBFT_DIR)
+
+# %.o: %.c 
+# 	$(CC) $(CFLAGS) -I/Users/taya/goinfre/homebrew/opt/readline/include -c $< -o $@
+
+# clean:
+# 	rm -f $(OBJS) 
+# 	$(MAKE) clean -C $(LIBFT_DIR)
+
+# fclean: clean
+# 	rm -f $(NAME)
+# 	$(MAKE) fclean -C $(LIBFT_DIR)
+
+# re: fclean all
+
+# .PHONY: all bonus clean fclean re
+
+SRCS = main.c handler.c tokenizer.c handle_word.c process_heredoc.c checker.c cmd_redir.c \
+	cmd_redir2.c join.c expand.c builtin.c pipe2.c cd.c check_path.c cmd.c echo.c \
+	env_list.c env_list2.c env.c exec.c exit.c export.c free.c free2.c heredoc.c \
+	pipe.c pwd.c redir.c unset.c utils.c utils2.c expand_heredoc.c expand2.c \
+	split_expand.c execute_cmd.c pipe_fork.c utils3.c
+
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror $(shell pkg-config --cflags readline)
 NAME = minishell
 
 OBJS = $(SRCS:.c=.o)
@@ -45,13 +83,13 @@ LIBFT = $(LIBFT_DIR)/libft.a
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) -L/Users/taya/goinfre/homebrew/opt/readline/lib -lreadline $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) $(shell pkg-config --libs readline)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
 %.o: %.c 
-	$(CC) $(CFLAGS) -I/Users/taya/goinfre/homebrew/opt/readline/include -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS) 
