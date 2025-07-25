@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouel-afi <ouel-afi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 23:59:33 by ouel-afi          #+#    #+#             */
-/*   Updated: 2024/11/19 20:05:11 by ouel-afi         ###   ########.fr       */
+/*   Updated: 2025/07/25 12:41:29 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,3 @@ char	*ft_strmapi(const char *s, char (*f)(unsigned int, char))
 	str[i] = 0;
 	return (str);
 }
-
-// char ft_upr(unsigned int i, char c)
-// {
-// 	return (ft_toupper(c));
-// }
-
-// int main()
-// {
-// 	char s[] = "abcd";
-// 	char *str = ft_strmapi(s, ft_upr);
-// 	printf("%s", str);
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouel-afi <ouel-afi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 19:23:48 by ouel-afi          #+#    #+#             */
-/*   Updated: 2024/11/19 23:10:47 by ouel-afi         ###   ########.fr       */
+/*   Updated: 2025/07/25 12:41:15 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,3 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 		i++;
 	}
 }
-
-// void print_str(unsigned int i, char *s)
-// {
-// 	printf("Index: %d, Value: %c\n", i, *s);
-// }
-
-// int main()
-// {
-// 	void (*f)(char *, void (unsigned int, char *)) = ft_striteri;
-
-// 	char s[] = "abcd";
-// 	f(s,print_str);
-// }

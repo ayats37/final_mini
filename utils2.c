@@ -6,7 +6,7 @@
 /*   By: taya <taya@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 00:50:21 by taya              #+#    #+#             */
-/*   Updated: 2025/07/24 19:23:12 by taya             ###   ########.fr       */
+/*   Updated: 2025/07/25 12:44:49 by taya             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,45 +53,4 @@ int	count_commands(t_token *token)
 		tmp = tmp->next;
 	}
 	return (cmd_count);
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return (0);
-}
-
-char	*ft_strndup(const char *s1, size_t n)
-{
-	size_t	len;
-	size_t	size;
-	size_t	i;
-	char	*s2;
-
-	len = 0;
-	while (s1[len])
-		len++;
-	if (len < n)
-		size = len;
-	else
-		size = n;
-	s2 = malloc(size + 1);
-	if (!s2)
-		return (NULL);
-	i = 0;
-	while (i < size)
-	{
-		s2[i] = s1[i];
-		i++;
-	}
-	s2[i] = '\0';
-	return (s2);
 }

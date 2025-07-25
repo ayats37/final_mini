@@ -32,7 +32,7 @@
 
 
 
-SRCS =  main.c handler.c tokenizer.c handle_word.c process_heredoc.c checker.c cmd_redir.c cmd_redir2.c join.c expand.c builtin.c pipe2.c cd.c check_path.c cmd.c echo.c env_list.c env_list2.c env.c exec.c exit.c export.c free.c free2.c heredoc.c pipe.c pwd.c redir.c unset.c utils.c utils2.c expand_heredoc.c expand2.c split_expand.c execute_cmd.c pipe_fork.c 
+SRCS =  main.c handler.c tokenizer.c handle_word.c process_heredoc.c checker.c cmd_redir.c cmd_redir2.c join.c expand.c builtin.c pipe2.c cd.c check_path.c cmd.c echo.c env_list.c env_list2.c env.c exec.c exit.c export.c free.c free2.c heredoc.c pipe.c pwd.c redir.c unset.c utils.c utils2.c expand_heredoc.c expand2.c split_expand.c execute_cmd.c pipe_fork.c  utils3.c
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = minishell
